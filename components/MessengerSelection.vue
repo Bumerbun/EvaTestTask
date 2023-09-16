@@ -1,20 +1,8 @@
 <template>
-    <div class="selectionOptions">
+    <div class="selectionOptions" v-for="option in optionsData">
         <div class="option">
-            <div><label>ВКонтакте</label></div>
-            <div><LabeledCheckBox ref="vk" @onClick="onClick" uncheckedText="what"/></div>
-        </div>
-        <div class="option">
-            <div><label>WhatsApp</label></div>
-            <div><LabeledCheckBox ref="whatsup"/></div>
-        </div>
-        <div class="option">
-            <div><label>Telegram</label></div>
-            <div><LabeledCheckBox ref="telegram"/></div>
-        </div>
-        <div class="option">
-            <div><label>SMS</label></div>
-            <div><LabeledCheckBox ref="sms"/></div>
+            <div><label>{{option.label}}</label></div>
+            <div><LabeledCheckBox :ref="option.ref" :id="option.ref" @onClick="onClick"/></div>
         </div>
     </div>
 </template>
@@ -23,28 +11,51 @@
 import LabeledCheckBox from './LabeledCheckBox.vue';
 var selectedOptions = [];
 export default{
+    props:{
+        "optionsData":{required:true, InstanceType: Array}
+    },
+    data(){
+        return {}
+    },
+    computed:{
+        selectedData(){
+        }
+    },
+    mounted(){
+        
+    },
     methods: {
         onClick(optionObject){
             if (optionObject.isChecked){
-                console.log("test")
                 var position = this.addSelectedOption(optionObject)
                 optionObject.labelChecked = position
             }
             else{
+                console.log("3")
                 this.removeSelectedOption(optionObject)
             }
+            this.getSelectedOptionsData()
         },
         addSelectedOption(optionObject){
             selectedOptions.push(optionObject)
-            console.log("test1")
             return selectedOptions.length
         },
         removeSelectedOption(optionObject){
             var position = selectedOptions.indexOf(optionObject);
             selectedOptions.splice(position, 1)
             for (let i = 0; i < selectedOptions.length; i++){
-                selectedOptions[i].labelChecked = i
+                selectedOptions[i].labelChecked = i + 1;
             }
+        },
+        unselectAll(){
+            for (option in selectedOptions){
+                this.removeSelectedOption(option)
+            }
+        },
+        getSelectedOptionsData(){
+            const selectedids = selectedOptions.map((option) => option.id);
+            console.log(selectedids.map((id) => this.optionsData.find((option) => option.ref == id)).map((x) => x.ref))
+            return selectedids.map((id) => this.optionsData.find((option) => option.ref == id))
         }
     }
 

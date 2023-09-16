@@ -23,24 +23,47 @@ export default{
             isChecked: false
         }
     },
+    watch: {
+        labelChecked(val){
+            this.updateTextLabel();
+        }
+    },
     mounted(){
         if (!this.id){
-            this.actualid = generateShortUID()
+            this.actualid = "checkbox_" + generateShortUID()
+        } 
+        else {
+            this.actualid = this.id
         }
         this.labelText = this.labelUnchecked;
-
+        setTimeout(() => {
+        this.setUnselected();
+        }, 1);
     },
     methods: {
         updateInput(event){
             this.isChecked = event.target.checked;
             this.$emit("onClick", this);
+            this.updateTextLabel();
+        },
+        updateTextLabel(){
             if (!this.isChecked){
                 this.labelText = this.labelUnchecked;
             }
             else{
                 this.labelText = this.labelChecked;
             }
-        }
+        },
+        setUnselected(){
+            this.$el.querySelector(`#${this.actualid}`).checked = false;
+            this.isChecked = false;
+            this.updateTextLabel();
+        },
+        setSelected(){
+            this.$el.querySelector(`#${this.actualid}`).checked = true;
+            this.isChecked = true;
+            this.updateTextLabel();
+        },
     }
     
 }
