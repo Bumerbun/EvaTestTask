@@ -27,11 +27,10 @@ export default{
     methods: {
         onClick(optionObject){
             if (optionObject.isChecked){
-                var position = this.addSelectedOption(optionObject)
+                const position = this.addSelectedOption(optionObject)
                 optionObject.labelChecked = position
             }
             else{
-                console.log("3")
                 this.removeSelectedOption(optionObject)
             }
             this.getSelectedOptionsData()
@@ -41,7 +40,7 @@ export default{
             return selectedOptions.length
         },
         removeSelectedOption(optionObject){
-            var position = selectedOptions.indexOf(optionObject);
+            const position = selectedOptions.indexOf(optionObject);
             selectedOptions.splice(position, 1)
             for (let i = 0; i < selectedOptions.length; i++){
                 selectedOptions[i].labelChecked = i + 1;
@@ -54,7 +53,6 @@ export default{
         },
         getSelectedOptionsData(){
             const selectedids = selectedOptions.map((option) => option.id);
-            console.log(selectedids.map((id) => this.optionsData.find((option) => option.ref == id)).map((x) => x.ref))
             return selectedids.map((id) => this.optionsData.find((option) => option.ref == id))
         }
     }

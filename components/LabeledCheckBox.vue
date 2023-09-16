@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <input class="checkbox" type="checkbox" :id="actualid" @change="updateInput"/>
-        <label :for="actualid">{{labelText}}</label>
+    <div class="custom_checkbox">
+        <input class="custom_checkbox_input" type="checkbox" :id="actualid" @change="updateInput"/>
+        <label class= "custom_checkbox_label" :for="actualid">{{labelText}}</label>
     </div>
 </template>
 
@@ -69,7 +69,7 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
 input[type="checkbox"]:not(:checked), 
 input[type="checkbox"]:checked {
   position: absolute;
