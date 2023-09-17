@@ -37,7 +37,7 @@ export default{
         }
         this.labelText = this.labelUnchecked;
         setTimeout(() => {
-        this.setUnselected();
+            this.setUnselected();
         }, 1);
     },
     methods: {

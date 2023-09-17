@@ -2,12 +2,12 @@
     <div class="answer_button">
         <div class="button_text">
             <label>Текст</label>
-            <input type="text" ref="textInput" v-model="text" :maxlength="maxTextSize" class="button_text_input"/>
+            <input type="text" ref="textInput" v-model="text" :maxlength="answerButtonLimitations.maxButtonTextSize" class="button_text_input"/>
         </div>
-        <div class="button_link" v-if="linksSupport">
+        <div class="button_link" v-show="answerButtonLimitations.linkButtonSupport">
             <label>Ссылка</label>
-            <input type="checkbox" ref="linkCheckbox" class="button_link_checkbox" v-model="linkEnabled" :change="onChange"/>
-            <input type="text" ref="linkInput" v-if="linkEnabled" v-model="link" class="button_link_input"/>
+            <input type="checkbox" ref="linkCheckbox" class="button_link_checkbox" v-model="linkEnabled" v-on:change="$emit('on-change', this)"/>
+            <input type="text" ref="linkInput" v-show="linkEnabled" v-model="link" class="button_link_input"/>
         </div>
     </div>
 </template>
@@ -15,8 +15,12 @@
 <script>
 export default {
     props: {
-        maxTextSize: {default: -1},
-        linksSupport: {default: true}
+        answerButtonLimitations: {
+            default: {
+                "maxTextSize": -1,
+                "linkButtonSupport": true
+            }
+        }
     },
     data(){
         return {
@@ -24,22 +28,6 @@ export default {
             link: "",
             linkEnabled: false,
         }
-    },
-    computed: {
-        linkInputVisiability(){
-            return this.linksSupport ? "visible" : "hidden";
-        },
-        linkVisiability(){
-            return this.linksSupport ? "visible" : "hidden";
-        }
-    },
-    methods: {
-        onChange(event){
-
-        }
     }
 }
 </script>
-
-<style scoped>
-</style>

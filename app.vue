@@ -1,7 +1,9 @@
 <template>
   <div>
-    <MessengerSelection :optionsData="optionsData"/>
-    <MessageOptions/>
+    <MessengerSelection :optionsData="optionsData" @selection-changed="optionsSelectionChanged"/>
+    <div v-for="option in selectedOptions" :key="option.ref">
+        <MessageOptions :optionData="option"/>
+    </div>
   </div>
 </template>
 
@@ -15,7 +17,7 @@ export default {
                 { 'label': "ВК",
                     'ref': "vk",
                     'limitations': {
-                        'maxTextSize': 4069,
+                        'maxTextSize': 4096,
                         'customKeyboardSupport': true,
                         'standardKeyboardSupport': true,
                         'standardKeyboardLimitations': {
@@ -49,9 +51,9 @@ export default {
                         'inlineKeyboardSupport': true,
                         'inlineKeyboardLimitations': {
                             'maxButtonCount': 3,
-                            'maxButtonTextSize': 20,
+                            'maxButtonTextSize': 10,
                             'linkButtonSupport': true,
-                            'maxLinkButtonCount': 1
+                            'maxLinkButtonCount': 2
                         },
                     }
                 },
@@ -100,7 +102,17 @@ export default {
                     }
                 },
             ],
+            selectedOptions: []
         };
+    },
+    mounted(){
+
+    },
+    methods:{
+        async optionsSelectionChanged(selector){
+            this.selectedOptions = selector.getSelectedOptionsData()
+            await nextTick()
+        }
     }
 }
 </script>

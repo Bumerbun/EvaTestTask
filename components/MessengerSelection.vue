@@ -14,16 +14,7 @@ export default{
     props:{
         "optionsData":{required:true, InstanceType: Array}
     },
-    data(){
-        return {}
-    },
-    computed:{
-        selectedData(){
-        }
-    },
-    mounted(){
-        
-    },
+    emits:['selection-changed'],
     methods: {
         onClick(optionObject){
             if (optionObject.isChecked){
@@ -33,7 +24,7 @@ export default{
             else{
                 this.removeSelectedOption(optionObject)
             }
-            this.getSelectedOptionsData()
+            this.$emit('selection-changed', this)
         },
         addSelectedOption(optionObject){
             selectedOptions.push(optionObject)
