@@ -1,9 +1,14 @@
 <template>
   <div>
+    <dialog ref="saveNotification">
+        <label>Данные успешно сохранены</label>
+        <input type="button" value="ок" v-on:click="closeDialog"/>
+    </dialog>
     <MessengerSelection :optionsData="optionsData" @selection-changed="optionsSelectionChanged"/>
     <div v-for="option in selectedOptions" :key="option.ref">
-        <MessageOptions :optionData="option"/>
+        <MessageOptions :optionData="option" ref="optionsData"/>
     </div>
+    <input type="button" v-on:click="saveButtonClick" value="Сохранить"/>
   </div>
 </template>
 
@@ -112,6 +117,36 @@ export default {
         async optionsSelectionChanged(selector){
             this.selectedOptions = selector.getSelectedOptionsData()
             await nextTick()
+        },
+        async saveButtonClick(){
+            const channelhash = {}
+            const channelsData = await ((await fetch("http://localhost:3333/channel", {method:"GET"})).json())
+            for (var i = 0; i < channelsData.length; i++){
+                channelhash[`${channelsData[i]['name']}`] = channelsData[i]['id']
+            }
+            const keyboardTypehash = {}
+            const keyboardTypeData = await ((await fetch("http://localhost:3333/keyboardType", {method:"GET"})).json())
+            for (var i = 0; i < keyboardTypeData.length; i++){
+                keyboardTypehash[`${keyboardTypeData[i]['name']}`] = keyboardTypeData[i]['id']
+            }
+            var finalData = this.$refs.optionsData.map((component) => component.getSelectedData())
+            console.log(finalData)
+            for (var i = 0; i < finalData.length; i++){
+                finalData[i].channel = channelhash[`${finalData[i].channel}`]
+                finalData[i].keyboardType = keyboardTypehash[`${finalData[i].keyboardType}`]
+                //console.log(finalData[i])
+                await fetch("http://localhost:3333/channelMessages", {
+                    method: "POST",
+                    body: JSON.stringify(finalData[i]),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                })
+            }
+            this.$refs.saveNotification.showModal()
+        },
+        closeDialog(){
+            this.$refs.saveNotification.close()
         }
     }
 }

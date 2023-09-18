@@ -48,7 +48,6 @@ export default {
         if (this.optionData.limitations.inlineKeyboardSupport){
             this.switchOptions.push("inline")
         }
-        console.log(this.switchOptions.length)
     },
     methods: {
         async addAnswerButton(){
@@ -119,7 +118,27 @@ export default {
             await nextTick()
             this.validateButtonCount()
             this.answerLinkCountValidation()
+        },
+        getSelectedData(){
+            var finalAnswerButtonsData = []
+            if (this.testElems.length != 0){
+                for(var i = 0; i < this.testElems.length; i++){
+                    finalAnswerButtonsData.push({
+                        "text" :this.$refs.answerOption[i].text,
+                        "link" :this.$refs.answerOption[i].link,
+                    })
+                }
+            }
+            const currentKeyboardOption = this.$refs.optionSwitch.currentOption
+            console.log(currentKeyboardOption)
+            return {
+                text: this.messageText,
+                channel: this.optionData.label,
+                keyboardType: currentKeyboardOption,
+                answerButtons: finalAnswerButtonsData
+            }
         }
+        
     }
 }
 
