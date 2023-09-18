@@ -1,10 +1,5 @@
-# Nuxt 3 Minimal Starter
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
-## Setup
-
-Make sure to install the dependencies:
+## Установка зависимостей 
 
 ```bash
 # npm
@@ -17,9 +12,9 @@ pnpm install
 yarn install
 ```
 
-## Development Server
+## Запуск сервера
 
-Start the development server on `http://localhost:3000`:
+Запуск сервера происходит на `http://localhost:3000`:
 
 ```bash
 # npm
@@ -32,32 +27,7 @@ pnpm run dev
 yarn dev
 ```
 
-## Production
+## Комментарии
 
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Форма полностью работает, но по стилям практически ничего нет
+Для корректного сохранения должна паралельно работать апи https://github.com/Bumerbun/EvaTestTaskAPI

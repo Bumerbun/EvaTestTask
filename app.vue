@@ -56,7 +56,7 @@ export default {
                         'inlineKeyboardSupport': true,
                         'inlineKeyboardLimitations': {
                             'maxButtonCount': 3,
-                            'maxButtonTextSize': 10,
+                            'maxButtonTextSize': 20 ,
                             'linkButtonSupport': true,
                             'maxLinkButtonCount': 2
                         },
